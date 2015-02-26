@@ -8,6 +8,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.provider.Settings;
 
+import pl.lkasprzyk.weathertestapp.R;
+
 /**
  * Created by Lucas on 2015-02-26.
  */
@@ -33,10 +35,10 @@ public class NetworkUtils {
     public static AlertDialog.Builder showNetworkDialog(final Context context) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("No Internet connection.");
-        builder.setMessage("You have no internet connection");
+        builder.setTitle(context.getString(R.string.common_no_network_dialog_title));
+        builder.setMessage(context.getString(R.string.common_no_network_dialog_msg));
 
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(context.getString(R.string.common_ok_dialog_button), new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -44,7 +46,7 @@ public class NetworkUtils {
             }
         });
 
-        builder.setNeutralButton("Settings", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton(context.getString(R.string.common_settings_dialog_button), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(Settings.ACTION_SETTINGS);
