@@ -1,13 +1,15 @@
 package pl.lkasprzyk.weathertestapp.weather_list;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,18 +32,35 @@ public class WeatherListFragment extends android.support.v4.app.Fragment {
     private static final String LOG_TAG = WeatherListFragment.class.getSimpleName();
 
     private RecyclerView recyclerView;
+    private View progressView;
+    private ProgressBar progress;
+    private TextView progressTextTv;
     private WeatherListAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private List<DayWeather> weatherForecasts = new ArrayList<>();
+    private OnDayWeatherForecastSelectedListener dayWeatherForecastSelectedListener;
 
     public WeatherListFragment() {
     }
 
+    public interface OnDayWeatherForecastSelectedListener {
+        public void onDayWeatherForecastSelected(String query, String date);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            dayWeatherForecastSelectedListener = (OnDayWeatherForecastSelectedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement OnDayWeatherForecastSelectedListener");
+        }
     }
 
     @Override
@@ -51,36 +70,45 @@ public class WeatherListFragment extends android.support.v4.app.Fragment {
         setUpViews();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
+
+    private void getWeatherForecast() {
         if (NetworkUtils.isNetworkConnectionAvailable(getActivity().getApplicationContext())) {
-            getWeatherForecast();
+            WeatherAPIClient.get().get5DayForecast("London", new Callback<ResponseData>() {
+                @Override
+                public void success(ResponseData responseData, Response response) {
+                    if (responseData != null && responseData.getData() != null && responseData.getData().getDaysWeather() != null) {
+                        progressView.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                        weatherForecasts = responseData.getData().getDaysWeather();
+                        adapter.setWeatherForecastsList(weatherForecasts);
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    showCannotFetchWeatherView();
+                }
+            });
         } else {
+            showCannotFetchWeatherView();
             NetworkUtils.showNetworkDialog(getActivity().getApplicationContext());
         }
     }
 
-    private void getWeatherForecast() {
-        WeatherAPIClient.get().get5DayForecast("London", new Callback<ResponseData>() {
-            @Override
-            public void success(ResponseData responseData, Response response) {
-                if (responseData != null && responseData.getData() != null && responseData.getData().getDaysWeather() != null) {
-                    weatherForecasts = responseData.getData().getDaysWeather();
-                    adapter.setWeatherForecastsList(weatherForecasts);
-                }
-            }
+    private void showCannotFetchWeatherView() {
+        progress.setVisibility(View.GONE);
+        progressTextTv.setText(getString(R.string.weather_cannot_featch_from_server_label));
+    }
 
-            @Override
-            public void failure(RetrofitError error) {
-                Log.e(LOG_TAG, error.toString());
-            }
-        });
+    @Override
+    public void onStart() {
+        super.onStart();
+        getWeatherForecast();
     }
 
     private void initViews() {
         layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        adapter = new WeatherListAdapter(weatherForecasts);
+        adapter = new WeatherListAdapter(getActivity().getApplicationContext(), weatherForecasts);
     }
 
     private void setUpViews() {
@@ -90,9 +118,24 @@ public class WeatherListFragment extends android.support.v4.app.Fragment {
         recyclerView.addOnItemTouchListener(new RecyclerViewItemClickListener(getActivity().getApplicationContext(), new RecyclerViewItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
+                DayWeather dayWeather = adapter.getWeatherForecastsList().get(position);
+                if (dayWeather != null) {
+                    dayWeatherForecastSelectedListener.onDayWeatherForecastSelected("London", dayWeather.getDate());
+                }
             }
         }));
+        progressView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tryAgainToFetchWeather();
+            }
+        });
+    }
+
+    private void tryAgainToFetchWeather() {
+        progress.setVisibility(View.VISIBLE);
+        progressTextTv.setText(getString(R.string.fragment_progress_loading_weather_label));
+        getWeatherForecast();
     }
 
     @Override
@@ -100,6 +143,9 @@ public class WeatherListFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_weather_list, container, false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+        progressView = rootView.findViewById(R.id.progress_view);
+        progress = (ProgressBar) progressView.findViewById(R.id.progress);
+        progressTextTv = (TextView) progressView.findViewById(R.id.progress_text);
         return rootView;
     }
 

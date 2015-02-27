@@ -4,9 +4,15 @@
 
     <android.support.v7.widget.RecyclerView
         android:layout_height="match_parent"
+        android:paddingTop="@dimen/weather_card_margin"
         android:layout_width="match_parent"
         android:id="@+id/recycler_view"
+        android:visibility="gone"
         android:scrollbars="vertical">
 
     </android.support.v7.widget.RecyclerView>
+
+    <include
+        layout="@layout/fragment_progress_layout"
+        android:id="@+id/progress_view" />
 </FrameLayout>

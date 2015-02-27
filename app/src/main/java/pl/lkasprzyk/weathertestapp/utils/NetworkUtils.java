@@ -32,7 +32,7 @@ public class NetworkUtils {
         return haveConnectedWifi || haveConnectedMobile;
     }
 
-    public static AlertDialog.Builder showNetworkDialog(final Context context) {
+    public static void showNetworkDialog(final Context context) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(context.getString(R.string.common_no_network_dialog_title));
@@ -55,6 +55,6 @@ public class NetworkUtils {
             }
         });
 
-        return builder;
+        builder.show();
     }
 }

@@ -5,10 +5,11 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import pl.lkasprzyk.weathertestapp.weather_details.WeatherDetailsFragment;
 import pl.lkasprzyk.weathertestapp.weather_list.WeatherListFragment;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements WeatherListFragment.OnDayWeatherForecastSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,5 +43,13 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDayWeatherForecastSelected(String query, String date) {
+        WeatherDetailsFragment fragment = WeatherDetailsFragment.newInstance(query, date);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, fragment).addToBackStack(null)
+                .commit();
     }
 }

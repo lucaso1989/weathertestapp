@@ -23,6 +23,10 @@ public class WeatherConditions {
     private int windSpeedKhm;
 
     @Expose
+    @SerializedName("chanceofrain")
+    private int chanceOfRain;
+
+    @Expose
     @SerializedName("pressure")
     private int pressure;
 
@@ -31,8 +35,8 @@ public class WeatherConditions {
     private int feelsLikeC;
 
     @Expose
-    @SerializedName("cloudcover")
-    private int cloudcover;
+    @SerializedName("winddir16Point")
+    private String windDirection;
 
     @Expose
     @SerializedName("weatherDesc")
@@ -75,12 +79,20 @@ public class WeatherConditions {
         this.feelsLikeC = feelsLikeC;
     }
 
-    public int getCloudcover() {
-        return cloudcover;
+    public int getChanceOfRain() {
+        return chanceOfRain;
     }
 
-    public void setCloudcover(int cloudcover) {
-        this.cloudcover = cloudcover;
+    public void setChanceOfRain(int chanceOfRain) {
+        this.chanceOfRain = chanceOfRain;
+    }
+
+    public String getWindDirection() {
+        return windDirection;
+    }
+
+    public void setWindDirection(String windDirection) {
+        this.windDirection = windDirection;
     }
 
     public int getHumidity() {
