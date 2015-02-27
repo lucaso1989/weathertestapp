@@ -60,12 +60,12 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
         DayWeather dayWeather = weatherForecastsList.get(position);
         if (dayWeather != null) {
-            String date = position == 0 ? String.format(context.getString(R.string.weather_list_row_item_current_day_today_label), dayWeather.getDate()) : dayWeather.getDate();
+            String date = position == 0 ? context.getString(R.string.weather_list_row_item_current_day_today_label, dayWeather.getDate()) : dayWeather.getDate();
             holder.weatherDate.setText(date);
             if (dayWeather.getWeatherConditions().size() > 0) {
                 if (dayWeather.getWeatherConditions().get(0).getWeatherDescription().size() > 0)
                     holder.weatherDescription.setText(dayWeather.getWeatherConditions().get(0).getWeatherDescription().get(0).getWeatherDescription());
-                holder.weatherRealFeelTemp.setText(String.format(context.getString(R.string.weather_list_row_item_real_feel_label), dayWeather.getWeatherConditions().get(0).getFeelsLikeC()));
+                holder.weatherRealFeelTemp.setText(context.getString(R.string.weather_list_row_item_real_feel_label, dayWeather.getWeatherConditions().get(0).getFeelsLikeC()));
                 if (dayWeather.getWeatherConditions().get(0).getWeatherIconUrl().size() > 0) {
                     int iconSizeDimenId = position == 0 ? R.dimen.weather_current_day_icon_size : R.dimen.weather_next_day_icon_size;
                     Picasso.with(context).load(dayWeather.getWeatherConditions().get(0).getWeatherIconUrl().get(0).getWeatherIconUrl()).resizeDimen(iconSizeDimenId, iconSizeDimenId).into(holder.weatherIcon);
