@@ -1,4 +1,4 @@
-package pl.lkasprzyk.weathertestapp.api.model;
+package pl.lkasprzyk.weathertestapp.api.model.weather;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

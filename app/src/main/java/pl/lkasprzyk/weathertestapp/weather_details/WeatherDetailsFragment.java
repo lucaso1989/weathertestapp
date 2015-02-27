@@ -20,8 +20,8 @@ import java.util.Locale;
 
 import pl.lkasprzyk.weathertestapp.R;
 import pl.lkasprzyk.weathertestapp.api.WeatherAPIClient;
-import pl.lkasprzyk.weathertestapp.api.model.DayWeather;
-import pl.lkasprzyk.weathertestapp.api.model.ResponseData;
+import pl.lkasprzyk.weathertestapp.api.model.weather.DayWeather;
+import pl.lkasprzyk.weathertestapp.api.model.weather.WeatherResponseData;
 import pl.lkasprzyk.weathertestapp.utils.NetworkUtils;
 import pl.lkasprzyk.weathertestapp.weather_list.WeatherListFragment;
 import retrofit.Callback;
@@ -163,13 +163,13 @@ public class WeatherDetailsFragment extends Fragment {
 
     private void getWeatherForecastForDate() {
         if (NetworkUtils.isNetworkConnectionAvailable(getActivity().getApplicationContext())) {
-            WeatherAPIClient.get().getWeatherDetails(weatherForecastQuery, weatherForecastDate, new Callback<ResponseData>() {
+            WeatherAPIClient.get().searchLocation(weatherForecastQuery, weatherForecastDate, new Callback<WeatherResponseData>() {
                 @Override
-                public void success(ResponseData responseData, Response response) {
-                    if (responseData != null && responseData.getData() != null && responseData.getData().getDaysWeather() != null) {
+                public void success(WeatherResponseData weatherResponseData, Response response) {
+                    if (weatherResponseData != null && weatherResponseData.getData() != null && weatherResponseData.getData().getDaysWeather() != null) {
                         progressView.setVisibility(View.GONE);
                         contentContainer.setVisibility(View.VISIBLE);
-                        setUpViews(responseData.getData().getDaysWeather().get(0));
+                        setUpViews(weatherResponseData.getData().getDaysWeather().get(0));
                     }
                 }
 

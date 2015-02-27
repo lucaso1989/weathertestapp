@@ -13,7 +13,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import pl.lkasprzyk.weathertestapp.R;
-import pl.lkasprzyk.weathertestapp.api.model.DayWeather;
+import pl.lkasprzyk.weathertestapp.api.model.weather.DayWeather;
 
 /**
  * Created by Lucas on 2015-02-26.

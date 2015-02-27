@@ -16,8 +16,8 @@ import java.util.List;
 
 import pl.lkasprzyk.weathertestapp.R;
 import pl.lkasprzyk.weathertestapp.api.WeatherAPIClient;
-import pl.lkasprzyk.weathertestapp.api.model.DayWeather;
-import pl.lkasprzyk.weathertestapp.api.model.ResponseData;
+import pl.lkasprzyk.weathertestapp.api.model.weather.DayWeather;
+import pl.lkasprzyk.weathertestapp.api.model.weather.WeatherResponseData;
 import pl.lkasprzyk.weathertestapp.utils.NetworkUtils;
 import pl.lkasprzyk.weathertestapp.utils.RecyclerViewItemClickListener;
 import retrofit.Callback;
@@ -73,13 +73,13 @@ public class WeatherListFragment extends android.support.v4.app.Fragment {
 
     private void getWeatherForecast() {
         if (NetworkUtils.isNetworkConnectionAvailable(getActivity().getApplicationContext())) {
-            WeatherAPIClient.get().get5DayForecast("London", new Callback<ResponseData>() {
+            WeatherAPIClient.get().get5DayForecast("London", new Callback<WeatherResponseData>() {
                 @Override
-                public void success(ResponseData responseData, Response response) {
-                    if (responseData != null && responseData.getData() != null && responseData.getData().getDaysWeather() != null) {
+                public void success(WeatherResponseData weatherResponseData, Response response) {
+                    if (weatherResponseData != null && weatherResponseData.getData() != null && weatherResponseData.getData().getDaysWeather() != null) {
                         progressView.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
-                        weatherForecasts = responseData.getData().getDaysWeather();
+                        weatherForecasts = weatherResponseData.getData().getDaysWeather();
                         adapter.setWeatherForecastsList(weatherForecasts);
                     }
                 }

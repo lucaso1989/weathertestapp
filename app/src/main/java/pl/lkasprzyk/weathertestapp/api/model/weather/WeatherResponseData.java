@@ -1,4 +1,4 @@
-package pl.lkasprzyk.weathertestapp.api.model;
+package pl.lkasprzyk.weathertestapp.api.model.weather;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by Lucas on 2015-02-26.
  */
-public class ResponseData {
+public class WeatherResponseData {
 
     @Expose
     @SerializedName("data")
