@@ -1,10 +1,10 @@
 package pl.lkasprzyk.weathertestapp.weather_list;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,15 +33,29 @@ public class WeatherListFragment extends android.support.v4.app.Fragment {
     private WeatherListAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private List<DayWeather> weatherForecasts = new ArrayList<>();
+    private OnDayWeatherForecastSelectedListener dayWeatherForecastSelectedListener;
 
     public WeatherListFragment() {
     }
 
+    public interface OnDayWeatherForecastSelectedListener {
+        public void onDayWeatherForecastSelected(String query, String date);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            dayWeatherForecastSelectedListener = (OnDayWeatherForecastSelectedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement OnDayWeatherForecastSelectedListener");
+        }
     }
 
     @Override
@@ -51,15 +65,6 @@ public class WeatherListFragment extends android.support.v4.app.Fragment {
         setUpViews();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (NetworkUtils.isNetworkConnectionAvailable(getActivity().getApplicationContext())) {
-            getWeatherForecast();
-        } else {
-            NetworkUtils.showNetworkDialog(getActivity().getApplicationContext());
-        }
-    }
 
     private void getWeatherForecast() {
         WeatherAPIClient.get().get5DayForecast("London", new Callback<ResponseData>() {
@@ -73,14 +78,23 @@ public class WeatherListFragment extends android.support.v4.app.Fragment {
 
             @Override
             public void failure(RetrofitError error) {
-                Log.e(LOG_TAG, error.toString());
             }
         });
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (NetworkUtils.isNetworkConnectionAvailable(getActivity().getApplicationContext())) {
+            getWeatherForecast();
+        } else {
+            NetworkUtils.showNetworkDialog(getActivity().getApplicationContext());
+        }
+    }
+
     private void initViews() {
         layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        adapter = new WeatherListAdapter(weatherForecasts);
+        adapter = new WeatherListAdapter(getActivity().getApplicationContext(), weatherForecasts);
     }
 
     private void setUpViews() {
@@ -90,7 +104,10 @@ public class WeatherListFragment extends android.support.v4.app.Fragment {
         recyclerView.addOnItemTouchListener(new RecyclerViewItemClickListener(getActivity().getApplicationContext(), new RecyclerViewItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
+                DayWeather dayWeather = adapter.getWeatherForecastsList().get(position);
+                if (dayWeather != null) {
+                    dayWeatherForecastSelectedListener.onDayWeatherForecastSelected("London", dayWeather.getDate());
+                }
             }
         }));
     }

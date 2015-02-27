@@ -4,6 +4,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:layout_height="match_parent"
+        android:paddingTop="@dimen/weather_card_margin"
         android:layout_width="match_parent"
         android:id="@+id/recycler_view"
         android:scrollbars="vertical">
