@@ -1,66 +1,56 @@
 package pl.lkasprzyk.weathertestapp;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
+import android.support.v7.app.ActionBarActivity;
+
+import pl.lkasprzyk.weathertestapp.utils.Constants;
+import pl.lkasprzyk.weathertestapp.weather_details.WeatherDetailsFragment;
+import pl.lkasprzyk.weathertestapp.weather_list.WeatherListFragment;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements WeatherListFragment.OnDayWeatherForecastSelectedListener, WeatherListFragment.OnActionBarRefreshListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setUpWeatherLocation();
+        setUpActionBar();
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, new WeatherListFragment())
                     .commit();
         }
     }
 
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    public void OnActionBarRefresh() {
+        setUpActionBar();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    private void setUpWeatherLocation() {
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.PREFS_CURRENT_WEATHER_LOCATION, Context.MODE_PRIVATE);
+        if (!sharedPreferences.contains(Constants.PREFS_CURRENT_WEATHER_LOCATION_NAME)) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(Constants.PREFS_CURRENT_WEATHER_LOCATION_NAME, Constants.DEFAULT_LOCATION);
+            editor.apply();
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
+    private void setUpActionBar() {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(getSharedPreferences(Constants.PREFS_CURRENT_WEATHER_LOCATION, Context.MODE_PRIVATE).getString(Constants.PREFS_CURRENT_WEATHER_LOCATION_NAME, getString(R.string.app_name)));
         }
+    }
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
+
+    @Override
+    public void onDayWeatherForecastSelected(String query, String date) {
+        WeatherDetailsFragment fragment = WeatherDetailsFragment.newInstance(query, date);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, fragment).addToBackStack(null)
+                .commit();
     }
 }
