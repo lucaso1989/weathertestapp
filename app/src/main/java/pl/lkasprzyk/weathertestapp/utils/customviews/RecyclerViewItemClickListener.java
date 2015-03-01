@@ -1,4 +1,4 @@
-package pl.lkasprzyk.weathertestapp.utils;
+package pl.lkasprzyk.weathertestapp.utils.customviews;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

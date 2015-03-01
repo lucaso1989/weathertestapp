@@ -38,18 +38,21 @@
 
             <TextView
                 android:layout_width="match_parent"
+                style="@style/BlackTextView"
                 android:layout_height="wrap_content"
                 android:id="@+id/weather_date" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/BlackTextView"
                 android:id="@+id/weather_description" />
         </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/BlackTextView"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/weather_real_feel_temp" />
 

@@ -13,7 +13,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import pl.lkasprzyk.weathertestapp.R;
-import pl.lkasprzyk.weathertestapp.api.model.DayWeather;
+import pl.lkasprzyk.weathertestapp.api.model.weather.DayWeather;
 
 /**
  * Created by Lucas on 2015-02-26.
@@ -24,6 +24,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
     private final int NEXT_DAY_VIEW_TYPE = 2;
     private List<DayWeather> weatherForecastsList;
     private Context context;
+    private String lastUpdate;
 
     public WeatherListAdapter(Context context, List<DayWeather> weatherForecastsList) {
         this.context = context;
@@ -71,6 +72,9 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
                     Picasso.with(context).load(dayWeather.getWeatherConditions().get(0).getWeatherIconUrl().get(0).getWeatherIconUrl()).resizeDimen(iconSizeDimenId, iconSizeDimenId).into(holder.weatherIcon);
                 }
             }
+            if (position == 0) {
+                holder.weatherLastUpdate.setText(context.getString(R.string.weather_list_row_last_update_label, lastUpdate));
+            }
         }
     }
 
@@ -84,12 +88,17 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
         notifyDataSetChanged();
     }
 
+    public void setLastUpdate(String lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView weatherDescription;
         public TextView weatherDate;
         public TextView weatherRealFeelTemp;
         public ImageView weatherIcon;
+        private TextView weatherLastUpdate;
 
         public ViewHolder(View v) {
             super(v);
@@ -97,6 +106,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
             weatherDate = (TextView) v.findViewById(R.id.weather_date);
             weatherRealFeelTemp = (TextView) v.findViewById(R.id.weather_real_feel_temp);
             weatherIcon = (ImageView) v.findViewById(R.id.weather_icon);
+            weatherLastUpdate = (TextView) v.findViewById(R.id.weather_last_update);
         }
     }
 }

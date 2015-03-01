@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@android:color/white"
+    android:padding="@dimen/autocomplete_textview_adapter_padding"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/location_name"
+        style="@style/BlackTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLargePopupMenu" />
+
+    <TextView
+        android:id="@+id/location_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/BlackTextView"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+</LinearLayout>
