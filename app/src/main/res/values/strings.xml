@@ -4,8 +4,10 @@
     <string name="common_no_network_dialog_title">No Internet connection.</string>
     <string name="common_no_network_dialog_msg">You have no internet connection</string>
     <string name="common_ok_dialog_button">Ok</string>
+    <string name="common_cancel_dialog_button">Cancel</string>
     <string name="common_settings_dialog_button">Settings</string>
     <string name="weather_list_row_item_real_feel_label">Real Feel: %d\u00B0 C</string>
+    <string name="weather_list_row_last_update_label">Last update:\n%s</string>
     <string name="weather_list_row_item_current_day_today_label">Today\n%s</string>
     <string name="weather_details_temperature_header_label">Temperature</string>
     <string name="weather_details_wind_header_label">Wind</string>
@@ -27,5 +29,9 @@
     <string name="weather_details_today_label">Today</string>
     <string name="fragment_progress_loading_weather_label">Loading weather...</string>
     <string name="weather_cannot_featch_from_server_label">Cannot fetch weather.\nTAP to try again.</string>
+    <string name="action_change_location">Change location</string>
+    <string name="weather_location_dialog_title">Change location</string>
+    <string name="weather_location_dialog_search_hint">Enter city name, postal code or coordinates</string>
+    <string name="weather_location_dialog_location_name_to_short">Given location is to short or doesn\'t exists</string>
 
 </resources>

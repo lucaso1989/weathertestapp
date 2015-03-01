@@ -14,6 +14,7 @@ public class ForecastData {
     @SerializedName("weather")
     private List<DayWeather> daysWeather;
 
+
     public List<DayWeather> getDaysWeather() {
         return daysWeather;
     }
@@ -21,4 +22,6 @@ public class ForecastData {
     public void setDaysWeather(List<DayWeather> daysWeather) {
         this.daysWeather = daysWeather;
     }
+
 }
+

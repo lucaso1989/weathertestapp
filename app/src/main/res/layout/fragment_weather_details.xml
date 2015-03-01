@@ -35,6 +35,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:gravity="center"
+                        style="@style/BlackTextView"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:id="@+id/weather_details_today"
                         android:text="@string/weather_details_today_label"
@@ -43,6 +44,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:gravity="center"
+                        style="@style/BlackTextView"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:id="@+id/weather_details_day_of_week"
                         android:textStyle="bold"
@@ -51,6 +53,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:gravity="center"
+                        style="@style/BlackTextView"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:id="@+id/weather_details_date"
                         android:layout_height="wrap_content" />
@@ -72,6 +75,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        style="@style/BlackTextView"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:id="@+id/weather_details_description" />
                 </LinearLayout>
@@ -91,6 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/weather_details_max_temp_label"
+                style="@style/BlackTextView"
                 android:layout_below="@+id/weather_details_temperature_header"
                 android:layout_toLeftOf="@+id/weather_details_max_temp_value"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -100,6 +105,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
+                style="@style/BlackTextView"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/weather_details_temperature_header"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -112,6 +118,7 @@
                 android:layout_below="@+id/weather_details_max_temp_label"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/weather_details_min_temp_label"
+                style="@style/BlackTextView"
                 android:id="@+id/weather_details_min_temp_label" />
 
             <TextView
@@ -119,6 +126,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/weather_details_max_temp_label"
                 android:layout_alignParentRight="true"
+                style="@style/BlackTextView"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textStyle="bold"
                 android:id="@+id/weather_details_min_temp_value" />
@@ -127,9 +135,10 @@
                 android:layout_width="match_parent"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_height="wrap_content"
+                style="@style/BlackTextView"
                 android:layout_toLeftOf="@+id/weather_details_real_feel_temp_value"
                 android:layout_below="@+id/weather_details_min_temp_label"
-                android:text="@string/weather_details_min_temp_label"
+                android:text="@string/weather_details_real_feel_temp_label"
                 android:id="@+id/weather_details_real_feel_temp_label" />
 
             <TextView
@@ -137,6 +146,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:textStyle="bold"
+                style="@style/BlackTextView"
                 android:layout_below="@+id/weather_details_min_temp_label"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/weather_details_real_feel_temp_value" />
@@ -158,6 +168,7 @@
                 android:layout_below="@+id/weather_details_wind_header"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/weather_details_wind_speed_label"
+                style="@style/BlackTextView"
                 android:id="@+id/weather_details_wind_speed_label" />
 
             <TextView
@@ -165,6 +176,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:textStyle="bold"
+                style="@style/BlackTextView"
                 android:layout_below="@+id/weather_details_wind_header"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/weather_details_wind_speed_value" />
@@ -176,6 +188,7 @@
                 android:layout_below="@+id/weather_details_wind_speed_label"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/weather_details_wind_direction_label"
+                style="@style/BlackTextView"
                 android:id="@+id/weather_details_wind_direction_label" />
 
             <TextView
@@ -184,6 +197,7 @@
                 android:textStyle="bold"
                 android:layout_below="@+id/weather_details_wind_speed_label"
                 android:layout_alignParentRight="true"
+                style="@style/BlackTextView"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/weather_details_wind_direction_value" />
 
@@ -202,6 +216,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_height="wrap_content"
                 android:text="@string/weather_details_chance_of_rain_label"
+                style="@style/BlackTextView"
                 android:layout_below="@+id/weather_details_other_header"
                 android:layout_toLeftOf="@+id/weather_details_rain_chance_value"
                 android:id="@+id/weather_details_rain_chance_label" />
@@ -211,6 +226,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
+                style="@style/BlackTextView"
                 android:layout_below="@+id/weather_details_other_header"
                 android:layout_alignParentRight="true"
                 android:id="@+id/weather_details_rain_chance_value" />
@@ -220,11 +236,13 @@
                 android:layout_below="@+id/weather_details_rain_chance_label"
                 android:layout_height="wrap_content"
                 android:text="@string/weather_details_pressure_label"
+                style="@style/BlackTextView"
                 android:layout_toLeftOf="@+id/weather_details_pressure_value"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/weather_details_pressure_label" />
 
             <TextView
+                style="@style/BlackTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -238,6 +256,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_height="wrap_content"
                 android:text="@string/weather_details_humidity_label"
+                style="@style/BlackTextView"
                 android:layout_below="@+id/weather_details_pressure_label"
                 android:layout_toLeftOf="@+id/weather_details_humidity_value"
                 android:id="@+id/weather_details_humidity_label" />
@@ -245,6 +264,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:textStyle="bold"
+                style="@style/BlackTextView"
                 android:layout_below="@+id/weather_details_pressure_label"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_height="wrap_content"

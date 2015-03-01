@@ -15,3 +15,10 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-keepattributes **
+-keep class !android.support.v7.internal.view.menu.**,** {*;}
+-dontpreverify
+-dontoptimize
+-dontshrink
+-dontwarn **

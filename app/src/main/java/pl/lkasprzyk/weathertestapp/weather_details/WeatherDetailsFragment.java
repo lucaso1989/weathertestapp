@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -18,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import pl.lkasprzyk.weathertestapp.MainActivity;
 import pl.lkasprzyk.weathertestapp.R;
 import pl.lkasprzyk.weathertestapp.api.WeatherAPIClient;
 import pl.lkasprzyk.weathertestapp.api.model.weather.DayWeather;
@@ -82,11 +84,14 @@ public class WeatherDetailsFragment extends Fragment {
             weatherForecastDate = args.getString(EXTRA_WEATHER_FORECAST_DATE);
             weatherForecastQuery = args.getString(EXTRA_WEATHER_FORECAST_QUERY);
         }
+        setHasOptionsMenu(true);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(true);
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         progressView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,13 +168,15 @@ public class WeatherDetailsFragment extends Fragment {
 
     private void getWeatherForecastForDate() {
         if (NetworkUtils.isNetworkConnectionAvailable(getActivity().getApplicationContext())) {
-            WeatherAPIClient.get().searchLocation(weatherForecastQuery, weatherForecastDate, new Callback<WeatherResponseData>() {
+            WeatherAPIClient.get().getWeatherDetails(weatherForecastQuery, weatherForecastDate, new Callback<WeatherResponseData>() {
                 @Override
                 public void success(WeatherResponseData weatherResponseData, Response response) {
                     if (weatherResponseData != null && weatherResponseData.getData() != null && weatherResponseData.getData().getDaysWeather() != null) {
                         progressView.setVisibility(View.GONE);
                         contentContainer.setVisibility(View.VISIBLE);
                         setUpViews(weatherResponseData.getData().getDaysWeather().get(0));
+                    } else {
+                        showCannotFetchWeatherView();
                     }
                 }
 
@@ -194,4 +201,17 @@ public class WeatherDetailsFragment extends Fragment {
         progressTextTv.setText(getString(R.string.fragment_progress_loading_weather_label));
         getWeatherForecastForDate();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            getActivity().onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }

@@ -21,6 +21,6 @@ public interface WeatherAPI {
     void getWeatherDetails(@Query("q") String query, @Query("date") String date, Callback<WeatherResponseData> callback);
 
     @GET("/search.ashx?key=" + API_KEY + "&format=" + JSON_FORMAT + "&popular=yes")
-    void searchLocation(@Query("q") String query, Callback<SearchResponseData> callback);
+    SearchResponseData searchLocation(@Query("q") String query);
 
 }
